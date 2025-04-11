@@ -74,9 +74,17 @@ public class ValidationObjectsTests
     [Fact]
     void AttributeValidation_Works()
     {
+        LocalizedErrors.LocalizedErrorLoader.LoadAll();
+        LocalizedErrors.StaticLocalizer.UiCulture = CultureInfo.GetCultureInfo("en-US");
         // Create new meeting for max 5 in the future
+        // Order of object initializer assignments matter so our object remains valid with each property initializer
         var sut = new AttributeMeeting() { MaxAttendees = 5, AttendeesUserIds = [1,2,3], TakesPlaceWhen = DateTime.Now + TimeSpan.FromDays(100)};
 
-        //sut.AlreadyHappened = true;
+        sut.AlreadyHappened = false; // no issue
+        
+        var ex = Record.Exception(() => sut.AlreadyHappened = true); // throws exception since meeting is not in the past
+        Assert.NotNull(ex);
+        Assert.IsType<FluentValidation.ValidationException>(ex);
+        Assert.Contains("must be in the past", ex.Message);
     }
 }
