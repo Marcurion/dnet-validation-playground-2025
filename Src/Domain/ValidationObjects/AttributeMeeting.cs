@@ -5,7 +5,7 @@ namespace Domain.ValidationObjects;
 [SetRestrictions(typeof(AttributeValidationRules.ProperAttributeMeeting))]
 public class AttributeMeeting
 {
-    private DateTime _takesPlaceWhen;
+    private DateTime _takesPlaceWhen = DateTime.Now;
 
     public DateTime TakesPlaceWhen
     {
@@ -13,21 +13,23 @@ public class AttributeMeeting
         set => AttributeValidationHelper.ValidateAndSet(ref _takesPlaceWhen, value, this);
     }
 
-    private bool _alreadyHappened;
+    private bool _alreadyHappened = false;
     public bool AlreadyHappened 
     {
         get => _alreadyHappened;
         set => AttributeValidationHelper.ValidateAndSet(ref _alreadyHappened, value, this);
     }
 
-    private uint _maxAttendees;
+    private uint _maxAttendees = 2;
     public uint MaxAttendees 
     {
         get => _maxAttendees;
         set => AttributeValidationHelper.ValidateAndSet(ref _maxAttendees, value, this);
     }
 
-    private List<uint> _attendeesUserIds;  
+    // Having valid defaults that comply with the Validator's rules is mandatory with this approach otherwise
+    // there can never be another valid instance be constructed since property changes evalute the entire object
+    private List<uint> _attendeesUserIds = [];  
     public List<uint> AttendeesUserIds 
     {
         get => _attendeesUserIds;
