@@ -1,16 +1,25 @@
+using Domain.Errors;
+using Domain.ValidationObjects;
 using FluentValidation;
 
 namespace Domain.AttributeValidation;
 
 public static class AttributeValidationRules
 {
-    public class StringInBounds : AbstractValidator<string>
+    public class ProperAttributeMeeting : AbstractValidator<AttributeMeeting>
     {
-        public StringInBounds()
+        public ProperAttributeMeeting()
         {
-            RuleFor(x => x)
-                .NotEmpty().WithMessage("Property cannot be empty")
-                .Length(5, 10).WithMessage("Property must be between 5 and 10 characters");
+            // List of users smaller than maximum
+            RuleFor(x => x.AttendeesUserIds)
+                .Must((model, attendeesUserIds) => attendeesUserIds?.Count <= model.MaxAttendees)
+                .WithMessage(DomainError.Meetings.TooManyAttendees.Description);
+            
+            // When AlreadyHappened is set to true, the meeting took place in the past
+            RuleFor(x => x.AlreadyHappened)
+                .Must((model, _) => model.TakesPlaceWhen.ToUniversalTime() <= DateTime.UtcNow)
+                .When(x => x.AlreadyHappened)
+                .WithMessage(DomainError.Meetings.CompletedMeetingsInThePast.Description);
         }
     }
 }

@@ -70,4 +70,13 @@ public class ValidationObjectsTests
         Assert.StartsWith("To complete", err.Description, StringComparison.Ordinal);
         Assert.Equal("en-US", LocalizedErrors.StaticLocalizer.UiCulture.Name);
     }
+
+    [Fact]
+    void AttributeValidation_Works()
+    {
+        // Create new meeting for max 5 in the future
+        var sut = new AttributeMeeting() { MaxAttendees = 5, AttendeesUserIds = [1,2,3], TakesPlaceWhen = DateTime.Now + TimeSpan.FromDays(100)};
+
+        //sut.AlreadyHappened = true;
+    }
 }
