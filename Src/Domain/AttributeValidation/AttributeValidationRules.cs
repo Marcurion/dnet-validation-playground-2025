@@ -6,9 +6,9 @@ namespace Domain.AttributeValidation;
 
 public static class AttributeValidationRules
 {
-    public class ProperAttributeMeeting : AbstractValidator<AttributeMeeting>
+    public class ValidAttributeMeeting : AbstractValidator<AttributeMeeting>
     {
-        public ProperAttributeMeeting()
+        public ValidAttributeMeeting()
         {
             // List of users smaller than maximum
             RuleFor(x => x.AttendeesUserIds)

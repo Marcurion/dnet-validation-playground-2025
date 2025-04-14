@@ -2,7 +2,7 @@ using Domain.AttributeValidation;
 
 namespace Domain.ValidationObjects;
 
-[SetRestrictions(typeof(AttributeValidationRules.ProperAttributeMeeting))]
+[SetRestrictions(typeof(AttributeValidationRules.ValidAttributeMeeting))]
 public class AttributeMeeting
 {
     private DateTime _takesPlaceWhen = DateTime.Now;

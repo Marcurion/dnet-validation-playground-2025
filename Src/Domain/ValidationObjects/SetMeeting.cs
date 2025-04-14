@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain.ValidationObjects;
 
-public class SetterMeeting
+public class SetMeeting
 {
     public DateTime TakesPlaceWhen { get; set; }
     
@@ -20,7 +20,7 @@ public class SetterMeeting
         AlreadyHappened = value;
     }     
     
-    public SetterMeeting AlterAlreadyHappened(bool value)
+    public SetMeeting AlterAlreadyHappened(bool value)
        {
            if (value == true && TakesPlaceWhen.ToUniversalTime() > DateTime.UtcNow)
                throw new ValidationException($"A meeting can only have happened when {nameof(TakesPlaceWhen)} lies in the past.");
