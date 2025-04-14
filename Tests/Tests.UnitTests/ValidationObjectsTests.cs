@@ -87,4 +87,26 @@ public class ValidationObjectsTests
         Assert.IsType<FluentValidation.ValidationException>(ex);
         Assert.Contains("must be in the past", ex.Message);
     }
+
+    [Fact]
+    void ErrorOrMeeting_SetProperty_Uses_AlterProperty_Correctly()
+    {
+        // Only SetAlreadyHappened enforces business rules, so if we can get an DomainError with Alter...() then we are good
+        ErrorOrMeeting sut = new ErrorOrMeeting();
+        var res = sut.ToErrorOr()
+            .Then(obj => obj.AlterTakesPlaceWhen(DateTime.Now + TimeSpan.FromDays(100)));
+        Assert.False(res.IsError);
+
+        res = res.Then(obj => obj.AlterMaxAttendees(5)); // No issue
+
+        res = res.Then(obj => obj.AlterAlreadyHappened(false)); // Does nothing
+        Assert.False(res.IsError);
+
+        // Violation: Meeting in the future can not already have happened
+        res = res.Then(obj => obj.AlterAlreadyHappened(true));
+        Assert.True(res.IsError);
+        Assert.Contains(DomainError.Meetings.CompletedMeetingsInThePast, res.Errors);
+        Assert.IsType<ErrorOr<ErrorOrMeeting>>(res);
+
+    }
 }

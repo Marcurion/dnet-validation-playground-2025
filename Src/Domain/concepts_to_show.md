@@ -26,4 +26,4 @@
 - Convert ErrorOr to Controller Result is easy ❓
 
 # Lessons learned
-- Order of access becomes very relevant with "Always Valid"
+- Order of access becomes very relevant with "Always Validify entire object"
