@@ -5,9 +5,9 @@
 - Fluent Validation with class attribute ✅ -> AttributeMeeting.cs & ValidAttributeMeeting
 
 # Return types
-- void -> SetMeeting.cs
-- property -> none -> AttributeMeeting.cs
-- ErrorOr -> ErrorOrMeeting.cs
+- void -> SetMeeting.cs ✅
+- property -> none -> AttributeMeeting.cs ✅
+- ErrorOr -> ErrorOrMeeting.cs ✅
 
 
 # Batch Validation

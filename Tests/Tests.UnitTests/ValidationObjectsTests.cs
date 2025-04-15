@@ -20,8 +20,6 @@ public class ValidationObjectsTests
         var ex = Record.Exception(() => sut.SetAlreadyHappened(true));
         Assert.NotNull(ex);
         Assert.IsType<ValidationException>(ex);
-
-
     }
     
     [Fact]
@@ -44,8 +42,6 @@ public class ValidationObjectsTests
 
          Assert.True(res.IsError);
          Assert.Equal(ErrorType.Validation, res.FirstError.Type);
-
-
      }
 
     [Fact]
@@ -59,6 +55,7 @@ public class ValidationObjectsTests
         Assert.StartsWith("Um ein", err.Description, StringComparison.Ordinal);
         Assert.Equal("de-DE", CultureInfo.CurrentUICulture.Name);
     }
+    
     [Fact]
     async Task LocalizedErrorMessage_SupportsEnglish()
     {
@@ -107,6 +104,5 @@ public class ValidationObjectsTests
         Assert.True(res.IsError);
         Assert.Contains(DomainError.Meetings.CompletedMeetingsInThePast, res.Errors);
         Assert.IsType<ErrorOr<ErrorOrMeeting>>(res);
-
     }
 }
