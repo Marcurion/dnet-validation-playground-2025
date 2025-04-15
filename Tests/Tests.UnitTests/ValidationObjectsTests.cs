@@ -34,7 +34,7 @@ public class ValidationObjectsTests
          var res = sut.ToErrorOr<SetMeeting>()
                  //.GuardAgainst<SetterMeeting, ValidationException>(ex => ex.AsErrorType())
                  //.TryDo<SetterMeeting, ValidationException>(sut => sut.SetAlreadyHappened(false))
-                 .TryAny(sut => sut.AlterAlreadyHappened(true))
+                 .ValidateAny(sut => sut.AlterAlreadyHappened(true))
              //.ValidateAny(sut => sut.AlterAlreadyHappened(true))
              //.ValidateExplicit<SetterMeeting, ValidationException>(sut => sut.AlterAlreadyHappened(true))
              //.TryDo<SetterMeeting, ValidationException>(sut => sut.SetAlreadyHappened(false))

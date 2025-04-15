@@ -89,7 +89,7 @@ public static class ErrorOrExtensionMethods
         });
     }
 
-    public static ErrorOr<T> Try<T, TException>(
+    public static ErrorOr<T> ValidateExplicit<T, TException>(
         this ErrorOr<T> input,
         Func<T, T> func
     )
@@ -107,7 +107,7 @@ public static class ErrorOrExtensionMethods
             }
         });
     }
-    public static ErrorOr<T> TryAny<T>(
+    public static ErrorOr<T> ValidateAny<T>(
         this ErrorOr<T> input,
         Func<T, T> func
     )
@@ -125,7 +125,7 @@ public static class ErrorOrExtensionMethods
         });
     }
 
-    public static ErrorOr<T> TryDo<T, TException>(
+    public static ErrorOr<T> ValidateExplicitDo<T, TException>(
         this ErrorOr<T> input,
         Action<T> action
     )
@@ -146,7 +146,7 @@ public static class ErrorOrExtensionMethods
             }
         });
     }
-    public static ErrorOr<T> TryDoAny<T>(
+    public static ErrorOr<T> ValidateAnyDo<T>(
         this ErrorOr<T> input,
         Action<T> action
     )

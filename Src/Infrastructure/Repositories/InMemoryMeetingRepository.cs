@@ -5,7 +5,7 @@ using ErrorOr;
 
 namespace Infrastructure.Repositories;
 
-public class InMemoryMeetingRepository
+public class InMemoryMeetingRepository : IInMemoryMeetingRepository
 {
     private List<MeetingEntity> list = [];
 

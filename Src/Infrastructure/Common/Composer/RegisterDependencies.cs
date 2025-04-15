@@ -10,7 +10,7 @@ public static class RegisterDependencies
     {
         services.AddSingleton<MyRepository>();
         services.AddSingleton<IRepository<object>, MyRepository>(x => x.GetRequiredService<MyRepository>());
-        services.AddSingleton<InMemoryMeetingRepository>();
+        services.AddSingleton<IInMemoryMeetingRepository, InMemoryMeetingRepository>();
         return services;
     }
 }
