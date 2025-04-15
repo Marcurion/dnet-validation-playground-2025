@@ -7,26 +7,41 @@ namespace Infrastructure.Repositories;
 
 public class InMemoryMeetingRepository
 {
-    
     private List<MeetingEntity> list = [];
 
     public ErrorOr<Success> Add(AttributeMeeting addition)
     {
-        return DomainError.NotImplemented;
+        var entity = MeetingEntity.ToDomain(addition);
+        list.Add(entity);
+        return Result.Success;
     }
     
     public ErrorOr<Success> Add(ErrorOrMeeting addition)
     {
-        return DomainError.NotImplemented;
+        var entity = MeetingEntity.ToDomain(addition);
+        list.Add(entity);
+        return Result.Success;
     }
     
     public ErrorOr<Success> Add(DataAnnotationMeeting addition)
     {
-        return DomainError.NotImplemented;
+        var entity = MeetingEntity.ToDomain(addition);
+        list.Add(entity);
+        return Result.Success;
     }
     
     public ErrorOr<Success> Add(SetMeeting addition)
     {
-        return DomainError.NotImplemented;
+        var entity = MeetingEntity.ToDomain(addition);
+        list.Add(entity);
+        return Result.Success;
     }
+
+    public ErrorOr<Success> Add(PlainMeeting addition)
+    {
+        var entity = MeetingEntity.ToDomain(addition);
+        list.Add(entity);
+        return Result.Success;
+    }
+
 }
