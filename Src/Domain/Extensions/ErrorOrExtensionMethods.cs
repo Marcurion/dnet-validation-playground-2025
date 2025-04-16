@@ -52,6 +52,27 @@ public static class ErrorOrExtensionMethods
         return list;
     }
 
+    public static ErrorOr<T> FlattenErrors<T>(this List<ErrorOr<T>> list)
+    {
+        if (list.Any(res => res.IsError))
+        {
+            ErrorOr<T> retValue = new();
+            foreach (var item in list)
+            {
+                if (item.IsError)
+                {
+                    retValue.Errors.AddRange(item.Errors);
+                }
+            }
+
+            return retValue;
+        }
+        else
+        {
+            throw new ArgumentException($"{nameof(FlattenErrors)} should only be called on collections that do have some errors in them, please add appropriate checks like list.Any(res => res.IsError)");
+        }
+    }
+
     public static ErrorOr<T> GuardAgainst<T, TException>(
         this ErrorOr<T> input,
         Func<TException, Error> errorFactory)

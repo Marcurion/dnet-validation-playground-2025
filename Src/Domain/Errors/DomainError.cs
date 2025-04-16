@@ -37,5 +37,11 @@ public static class DomainError
             );
     
 
+        [LocalizedErrors.LocalizedError("en-US", "Meeting Creation failed")]
+        [LocalizedErrors.LocalizedError("de-DE", "Das Meeting konnte nicht erstellt werden")]
+        public static Error CouldNotCreate => Error.Validation(
+            code: $"{nameof(DomainError)}.{nameof(Meetings)}.{nameof(CouldNotCreate)}",
+            description: LocalizedErrors.StaticLocalizer.Get($"{nameof(DomainError)}.{nameof(Meetings)}.{nameof(CouldNotCreate)}")
+            );
     }
 }

@@ -57,13 +57,13 @@ public class ErrorOrMeeting
         return this;
     }
     
-    public ErrorOr<Success> SetAttendeesIds(List<uint> value)
+    public ErrorOr<Success> SetAttendeesUserIds(List<uint> value)
     {
-       return this.AlterAttendeesIds(value).Else(errors => errors).Then((res) => Result.Success);
+       return this.AlterAttendeesUserIds(value).Else(errors => errors).Then((res) => Result.Success);
 
     }
 
-    public ErrorOr<ErrorOrMeeting> AlterAttendeesIds(List<uint> value)
+    public ErrorOr<ErrorOrMeeting> AlterAttendeesUserIds(List<uint> value)
     {
         if (value.Count >= MaxAttendees)
             return DomainError.Meetings.TooManyAttendees;
