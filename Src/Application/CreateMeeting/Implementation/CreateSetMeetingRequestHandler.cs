@@ -23,7 +23,7 @@ public class CreateSetMeetingRequestHandler : IRequestHandler<CreateSetMeetingRe
         Random randomizer = new Random();
 
         // Randomize how the request is handled
-        switch (randomizer.Next(0, 2))
+        switch (randomizer.Next(0, 3))
         {
             case 0:
                 return await Method1(request);
