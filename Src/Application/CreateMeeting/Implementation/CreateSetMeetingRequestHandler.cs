@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Net.Security;
 using Domain.Errors;
 using Domain.Extensions;
@@ -30,6 +31,10 @@ public class CreateSetMeetingRequestHandler : IRequestHandler<CreateSetMeetingRe
             
             case 1:
                 return await Method2(request);
+                break;
+            
+            case 2:
+                return await Method3(request);
                 break;
             
             default:
@@ -65,5 +70,29 @@ public class CreateSetMeetingRequestHandler : IRequestHandler<CreateSetMeetingRe
             .Then(_repository.Add);
 
         return res;
+    }
+    
+    private async Task<ErrorOr<Success>> Method3(CreateSetMeetingRequest request)
+    {
+        Console.WriteLine("Using Method3");
+
+        try
+        {
+            var newMeeting = new SetMeeting();
+            newMeeting.SetTakesPlaceWhen(request.TakesPlaceWhen);
+            newMeeting.SetAlreadyHappened(request.AlreadyHappened);
+            newMeeting.SetMaxAttendees(request.MaxAttendees);
+            newMeeting.SetAttendeesUserIds(request.AttendeesUserIds);
+
+            return _repository.Add(newMeeting);
+        }
+        catch (ValidationException v)
+        {
+            return v.AsErrorType(ErrorType.Validation);
+        }
+        catch (Exception e)
+        {
+            return e.AsErrorType();
+        }
     }
 }
