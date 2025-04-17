@@ -47,12 +47,11 @@ public class CreateSetMeetingRequestHandler : IRequestHandler<CreateSetMeetingRe
     {
         Console.WriteLine("Using Method1");
        
-        // TODO: Then -> ValidateAny
         ErrorOr<Success> res = new SetMeeting().ToErrorOr()
-            .Then(res => res.AlterTakesPlaceWhen(request.TakesPlaceWhen))
-            .Then(res => res.AlterAlreadyHappened(request.AlreadyHappened))
-            .Then(res => res.AlterMaxAttendees(request.MaxAttendees))
-            .Then(res => res.AlterAttendeesUserIds(request.AttendeesUserIds))
+            .ValidateAny(res => res.AlterTakesPlaceWhen(request.TakesPlaceWhen))
+            .ValidateAny(res => res.AlterAlreadyHappened(request.AlreadyHappened))
+            .ValidateAny(res => res.AlterMaxAttendees(request.MaxAttendees))
+            .ValidateAny(res => res.AlterAttendeesUserIds(request.AttendeesUserIds))
             .Then(_repository.Add);
 
         return res;
