@@ -65,12 +65,13 @@ public class CreateErrorOrMeetingRequestHandler : IRequestHandler<CreateErrorOrM
     {
         Console.WriteLine("Using Method2");
 
-        ErrorOr<Success> res = new ErrorOrMeeting().ToErrorOr()
-            .ThenDo(res => res.SetTakesPlaceWhen(request.TakesPlaceWhen))
-            .ThenDo(res => res.SetAlreadyHappened(request.AlreadyHappened))
-            .ThenDo(res => res.SetMaxAttendees(request.MaxAttendees))
-            .ThenDo(res => res.SetAttendeesUserIds(request.AttendeesUserIds))
-            .Then(res => _repository.Add(res));
+        ErrorOrMeeting meeting = new ErrorOrMeeting();
+            var res = new ErrorOr<Success>()
+            .Then(res => meeting.SetTakesPlaceWhen(request.TakesPlaceWhen))
+            .Then(res => meeting.SetAlreadyHappened(request.AlreadyHappened))
+            .Then(res => meeting.SetMaxAttendees(request.MaxAttendees))
+            .Then(res => meeting.SetAttendeesUserIds(request.AttendeesUserIds))
+            .Then(res => _repository.Add(meeting));
 
         return res;
     }
@@ -85,13 +86,13 @@ public class CreateErrorOrMeetingRequestHandler : IRequestHandler<CreateErrorOrM
         overallResult = newMeeting.SetTakesPlaceWhen(request.TakesPlaceWhen);
         if (overallResult.IsError) return overallResult.WithError(DomainError.Meetings.CouldNotCreate);
         
-        newMeeting.SetAlreadyHappened(request.AlreadyHappened);
+        overallResult = newMeeting.SetAlreadyHappened(request.AlreadyHappened);
         if (overallResult.IsError) return overallResult.WithError(DomainError.Meetings.CouldNotCreate);
         
-        newMeeting.SetMaxAttendees(request.MaxAttendees);
+        overallResult = newMeeting.SetMaxAttendees(request.MaxAttendees);
         if (overallResult.IsError) return overallResult.WithError(DomainError.Meetings.CouldNotCreate);
         
-        newMeeting.SetAttendeesUserIds(request.AttendeesUserIds);
+        overallResult = newMeeting.SetAttendeesUserIds(request.AttendeesUserIds);
         if (overallResult.IsError) return overallResult.WithError(DomainError.Meetings.CouldNotCreate);
 
         return _repository.Add(newMeeting);

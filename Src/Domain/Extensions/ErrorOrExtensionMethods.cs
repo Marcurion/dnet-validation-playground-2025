@@ -61,7 +61,8 @@ public static class ErrorOrExtensionMethods
             {
                 if (item.IsError)
                 {
-                    retValue.Errors.AddRange(item.Errors);
+                    foreach (var error in item.Errors)
+                        retValue = retValue.WithError(error);
                 }
             }
 
