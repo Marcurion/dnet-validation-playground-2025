@@ -32,13 +32,11 @@ public class ValidationObjectsTests
 
          // Naming Proposal: .ValidateAny() .ValidateAnyDo() .ValidateExplicit() .ValidateExplicitDo()
          var res = sut.ToErrorOr<SetMeeting>()
-                 //.GuardAgainst<SetterMeeting, ValidationException>(ex => ex.AsErrorType())
-                 //.TryDo<SetterMeeting, ValidationException>(sut => sut.SetAlreadyHappened(false))
-                 .ValidateAny(sut => sut.AlterAlreadyHappened(true))
-             //.ValidateAny(sut => sut.AlterAlreadyHappened(true))
-             //.ValidateExplicit<SetterMeeting, ValidationException>(sut => sut.AlterAlreadyHappened(true))
-             //.TryDo<SetterMeeting, ValidationException>(sut => sut.SetAlreadyHappened(false))
-             ;//.Else(DomainError.NotImplemented);
+             
+             .Then(sut => sut.AlterAlreadyHappened(false)) // Does nothing
+             .ValidateAny(sut => sut.AlterAlreadyHappened(true)) // Throws exception
+             .Then(sut => new SetMeeting().ToErrorOr()); // Is not executed
+
 
          Assert.True(res.IsError);
          Assert.Equal(ErrorType.Validation, res.FirstError.Type);
