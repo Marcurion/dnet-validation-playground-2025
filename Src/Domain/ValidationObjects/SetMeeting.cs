@@ -52,7 +52,7 @@ public class SetMeeting
     public void SetAttendeesUserIds(List<uint> value)
     {
         if (value.Count > MaxAttendees)
-            throw new ValidationException($"You can not have more participants than {nameof(MaxAttendees)} allows");
+            throw new ValidationException($"You can not have more attendees than {nameof(MaxAttendees)} allows");
         
         this.AttendeesUserIds = value;
     }
