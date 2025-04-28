@@ -1,6 +1,6 @@
 using System.Reflection;
 using Application.Common.Composers;
-using Application.Feature1;
+using Application.CreateMeeting.Abstraction;
 using Domain.Extensions;
 using ErrorOr;
 using FluentValidation;
@@ -14,8 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.RegisterApplication();
 builder.Services.RegisterInfrastructure();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(Feature1RequestHandler))));
-builder.Services.AddValidatorsFromAssembly(typeof(Feature1Validator).Assembly, ServiceLifetime.Transient);
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(CreateMeetingRequest))));
+builder.Services.AddValidatorsFromAssembly(typeof(CreateMeetingValidator).Assembly, ServiceLifetime.Transient);
 
 var app = builder.Build();
 
@@ -24,12 +24,6 @@ var app = builder.Build();
 app.UseAuthorization();
 
 app.MapControllers();
-
-Task.Run(async () =>
-{
-    ErrorOr<int> featureResult = await app.Services.GetRequiredService<IMediator>().Send(new Feature1Request() { RequestInfo = "Test" });
-    Console.WriteLine(featureResult.ConcatErrorCodes(" & "));
-});
 
 app.Run();
 

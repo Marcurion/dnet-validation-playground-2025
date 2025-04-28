@@ -9,9 +9,6 @@
         <ProjectReference Include="..\Domain\Domain.csproj" PrivateAssets="All" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Common\Options\" />
-    </ItemGroup>
-    <ItemGroup>
       <PackageReference Include="Riok.Mapperly" />
     </ItemGroup>
 </Project>

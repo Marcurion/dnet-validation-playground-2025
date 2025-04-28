@@ -1,4 +1,3 @@
-using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,10 +14,6 @@ public class MyCustomWebFactory : WebApplicationFactory<Program>
         builder.ConfigureServices(services =>
         {
             // Override services if needed (e.g., replace with test database)
-            services.RemoveAll<IRepository<object>>();
-            var mockRepository = Substitute.For<IRepository<object>>();
-            mockRepository.When(m => m.SaveAsync()).Do((x) => Console.WriteLine("No Exception"));
-            services.AddSingleton<IRepository<object>>(mockRepository);
         });
 
         builder.ConfigureTestServices(services =>
