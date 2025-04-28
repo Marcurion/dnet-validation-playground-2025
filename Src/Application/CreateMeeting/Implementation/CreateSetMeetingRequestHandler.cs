@@ -43,6 +43,7 @@ public class CreateSetMeetingRequestHandler : IRequestHandler<CreateSetMeetingRe
         }
     }
 
+    // Functional approach where the object itself is returned by the modification method, exceptions are handled by the surrounding method
     private async Task<ErrorOr<Success>> Method1(CreateSetMeetingRequest request)
     {
         Console.WriteLine("Using Method1");
@@ -57,6 +58,7 @@ public class CreateSetMeetingRequestHandler : IRequestHandler<CreateSetMeetingRe
         return res;
     }
 
+    // Also functional approach but modification methods do not return the object itself but void
     private async Task<ErrorOr<Success>> Method2(CreateSetMeetingRequest request)
     {
         Console.WriteLine("Using Method2");
@@ -71,6 +73,7 @@ public class CreateSetMeetingRequestHandler : IRequestHandler<CreateSetMeetingRe
         return res;
     }
     
+    // Try-catch block approach using modification methods
     private async Task<ErrorOr<Success>> Method3(CreateSetMeetingRequest request)
     {
         Console.WriteLine("Using Method3");

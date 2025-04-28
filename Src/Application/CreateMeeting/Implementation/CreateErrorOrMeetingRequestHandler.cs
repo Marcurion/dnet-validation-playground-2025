@@ -47,6 +47,7 @@ public class CreateErrorOrMeetingRequestHandler : IRequestHandler<CreateErrorOrM
         }
     }
 
+    // Functional approach using the modification methods that return ErrorOr<ClassT>
     private async Task<ErrorOr<Success>> Method1(CreateErrorOrMeetingRequest request)
     {
         Console.WriteLine("Using Method1");
@@ -61,6 +62,7 @@ public class CreateErrorOrMeetingRequestHandler : IRequestHandler<CreateErrorOrM
         return res;
     }
 
+    // Functional approach using the modification methods that return ErrorOr<Success>
     private async Task<ErrorOr<Success>> Method2(CreateErrorOrMeetingRequest request)
     {
         Console.WriteLine("Using Method2");
@@ -76,6 +78,7 @@ public class CreateErrorOrMeetingRequestHandler : IRequestHandler<CreateErrorOrM
         return res;
     }
 
+    // Procedural step-by-step approach, modification method returns ErrorOr<Success>: simple, predictable, avoids nesting 
     private async Task<ErrorOr<Success>> Method3(CreateErrorOrMeetingRequest request)
     {
         Console.WriteLine("Using Method3");
@@ -98,6 +101,7 @@ public class CreateErrorOrMeetingRequestHandler : IRequestHandler<CreateErrorOrM
         return _repository.Add(newMeeting);
     }
     
+    // A procedural approach that uses a (flattened) list to collect results, modification method returns ErrorOr<Success>, collects all issues with the request, not just the first
     private async Task<ErrorOr<Success>> Method4(CreateErrorOrMeetingRequest request)
     {
         Console.WriteLine("Using Method4");

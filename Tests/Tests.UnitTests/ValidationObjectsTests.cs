@@ -20,6 +20,7 @@ public class ValidationObjectsTests
         var ex = Record.Exception(() => sut.SetAlreadyHappened(true));
         Assert.NotNull(ex);
         Assert.IsType<ValidationException>(ex);
+        Assert.False(sut.AlreadyHappened); // domain object remains valid, always valid
     }
     
     [Fact]

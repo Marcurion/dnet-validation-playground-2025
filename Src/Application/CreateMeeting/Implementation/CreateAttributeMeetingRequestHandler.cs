@@ -39,6 +39,7 @@ public class CreateAttributeMeetingRequestHandler : IRequestHandler<CreateAttrib
         }
     }
 
+    // Functional approach using properties which throw exceptions that are captured by the surrounding method
     private async Task<ErrorOr<Success>> Method1(CreateAttributeMeetingRequest request)
     {
         Console.WriteLine("Using Method1");
@@ -53,7 +54,7 @@ public class CreateAttributeMeetingRequestHandler : IRequestHandler<CreateAttrib
         return res;
     }
 
-    
+    // Try-catch block approach using auto-validated properties, very subtle with less impact on readability, just need to remember to handle the exceptions 
     private async Task<ErrorOr<Success>> Method2(CreateAttributeMeetingRequest request)
     {
         Console.WriteLine("Using Method2");
