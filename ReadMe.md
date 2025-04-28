@@ -53,3 +53,6 @@ A list of covered concepts in this project
 
 # Lessons learned
 - Order of access becomes very relevant with "Always Validify entire object"
+
+# Further investigation
+.Net 10 with C# 14 will feature extension members which could be an interesting way to add validation to fields and properties.

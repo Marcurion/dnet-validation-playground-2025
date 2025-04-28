@@ -14,7 +14,8 @@ public class ValidationObjectsTests
     void SetterMeeting_ThrowsValidationException_WhenCompletedInTheFuture()
     {
         // Create Meeting in the future 
-        var sut = new SetMeeting() {TakesPlaceWhen = DateTime.Now + TimeSpan.FromDays(100)};
+        var sut = new SetMeeting() {};
+        sut.SetTakesPlaceWhen(DateTime.Now + TimeSpan.FromDays(100));
 
         sut.SetAlreadyHappened(false);
         var ex = Record.Exception(() => sut.SetAlreadyHappened(true));
@@ -27,7 +28,8 @@ public class ValidationObjectsTests
      void SetterMeetingThrowingValidationException_BreaksChain()
      {
          // Create Meeting in the future 
-         var sut = new SetMeeting() {TakesPlaceWhen = DateTime.Now + TimeSpan.FromDays(100)};
+         var sut = new SetMeeting() {};
+         sut.SetTakesPlaceWhen(DateTime.Now + TimeSpan.FromDays(100));
  
          sut.SetAlreadyHappened(false);
 

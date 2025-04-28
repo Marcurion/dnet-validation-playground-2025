@@ -4,13 +4,13 @@ namespace Domain.ValidationObjects;
 
 public class SetMeeting
 {
-    public DateTime TakesPlaceWhen { get; set; }
+    public DateTime TakesPlaceWhen { get; private set; }
 
-    public bool AlreadyHappened { get; protected set; }
+    public bool AlreadyHappened { get; private set; }
 
-    public uint MaxAttendees { get; set; }
+    public uint MaxAttendees { get; private set; }
 
-    public List<uint> AttendeesUserIds { get; set; }
+    public List<uint> AttendeesUserIds { get; private set; }
 
     public void SetTakesPlaceWhen(DateTime value)
     {

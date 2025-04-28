@@ -6,13 +6,13 @@ namespace Domain.ValidationObjects;
 
 public class ErrorOrMeeting
 {
-    public DateTime TakesPlaceWhen { get; protected set; }
+    public DateTime TakesPlaceWhen { get; private set; }
 
-    public bool AlreadyHappened { get; protected set; }
+    public bool AlreadyHappened { get; private set; }
 
-    public uint MaxAttendees { get; protected set; }
+    public uint MaxAttendees { get; private set; }
 
-    public List<uint> AttendeesUserIds { get; protected set; }
+    public List<uint> AttendeesUserIds { get; private set; }
 
     // NOTEABLE: I decided to offer both the Set... and Alter... methods even though only one is required,
     // the reason is since the AlterMethod returns the object itself as ErrorOr type it works well with
