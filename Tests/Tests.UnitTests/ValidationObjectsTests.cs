@@ -48,6 +48,7 @@ public class ValidationObjectsTests
     {
         
         LocalizedErrors.LocalizedErrorLoader.LoadAll();
+        LocalizedErrors.StaticLocalizer.UiCulture = CultureInfo.GetCultureInfo("de-DE");
 
         var err = DomainError.Meetings.CompletedMeetingsInThePast;
         
