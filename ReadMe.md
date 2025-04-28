@@ -49,7 +49,7 @@ A list of covered concepts in this project
 - Localization is possible with ErrorOr  ✅ -> **DomainError.cs & LocalizedErrors.cs**
 - Exception validation details (faulty member names) are not lost with ErrorOr ✅
 - Convert ErrorOr to Controller Result is easy ✅
-- Valid state is preserved, object remains valid
+- Valid state is preserved, object remains valid ✅
 
 # Lessons learned
 - Order of access becomes very relevant with "Always Validify entire object"

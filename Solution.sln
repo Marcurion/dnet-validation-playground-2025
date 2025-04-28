@@ -22,6 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{92BC8BA6-1778-457E-8C7B-EA60067E822A}"
 	ProjectSection(SolutionItems) = preProject
 		ReadMe.md = ReadMe.md
+		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
 Global
