@@ -107,4 +107,48 @@ public class ValidationObjectsTests
         Assert.Contains(DomainError.Meetings.CompletedMeetingsInThePast, res.Errors);
         Assert.IsType<ErrorOr<ErrorOrMeeting>>(res);
     }
+
+    [Fact]
+    void ValueMeeting_WorksAsExpected()
+    {
+        PlainMeeting invalid = new PlainMeeting() {AlreadyHappened = true, MaxAttendees = 5, AttendeesUserIds = [1,2,3], TakesPlaceWhen = DateTime.Now + TimeSpan.FromDays(100)};
+        PlainMeeting valid = new PlainMeeting() {AlreadyHappened = false, MaxAttendees = 5, AttendeesUserIds = [1,2,3], TakesPlaceWhen = DateTime.Now + TimeSpan.FromDays(100)};
+        
+        Assert.False(ValueMeeting.TryFrom(invalid, out _));
+        Assert.Throws<FluentValidation.ValidationException>(() => ValueMeeting.From(invalid));
+        Assert.True(ValueMeeting.MakeErrorOr(invalid).IsError);
+
+        var errorOrSuccess = invalid.ToErrorOr()
+                .Then(eo => ValueMeeting.TestErrorOr(eo))
+                .Then(eo => valid.ToErrorOr())
+                .Then(eo => ValueMeeting.TestErrorOr(eo))
+                .Then(eo => Result.Success)
+            ;
+        Assert.True(errorOrSuccess.IsError);
+        Assert.NotEmpty(errorOrSuccess.Errors);
+
+        var errorOrSuccess2 = Result.Success.ToErrorOr()
+                .Then(res => ValueMeeting.TestErrorOrSuccess(valid))
+                .Then(res => ValueMeeting.TestErrorOrSuccess(invalid))
+            ;
+        Assert.True(errorOrSuccess2.IsError);
+        Assert.NotEmpty(errorOrSuccess2.Errors);
+
+        var errorOrSuccess3 = Result.Success.ToErrorOr()
+                .Then(res => ValueMeeting.TestErrorOrSuccess(valid))
+                .Then(res => ValueMeeting.TestErrorOrSuccess(valid))
+                .Then(res => ValueMeeting.TestErrorOrSuccess(valid))
+            ;
+
+        Assert.False(errorOrSuccess3.IsError);
+
+        var errorOrSuccess4 = Result.Success.ToErrorOr()
+                .ValidateAnyDo(res => ValueMeeting.From(valid))
+                .ValidateAnyDo(res => ValueMeeting.From(invalid))
+                .ValidateAnyDo(res => ValueMeeting.From(valid))
+            ;
+        Assert.True(errorOrSuccess4.IsError);
+        Assert.NotEmpty(errorOrSuccess4.Errors);
+
+    }
 }

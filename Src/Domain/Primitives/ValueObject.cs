@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
+using Domain.Extensions;
+using ErrorOr;
 
 namespace Domain.Primitives;
 
@@ -55,7 +57,7 @@ public abstract class ValueObject<TValue, TValueObject> where TValueObject : Val
     {
         return !(a == b);
     }
-    
+ 
     /// <summary>
     /// Try to create a value object from a value return true if valid and the object.
     /// </summary>
@@ -113,6 +115,15 @@ public abstract class ValueObject<TValue, TValueObject> where TValueObject : Val
     /// <returns></returns>
     protected virtual bool TryValidate()
     {
+        try
+        {
+            this.Validate();
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
         return true;
     }
     /// <summary>
@@ -120,5 +131,69 @@ public abstract class ValueObject<TValue, TValueObject> where TValueObject : Val
     /// </summary>
     protected virtual void Validate()
     {
+    }
+/// <summary>
+/// Extending the ValueObject with ErrorOr function 
+/// </summary>
+/// <param name="value">The wrapped object</param>
+/// <returns>ErrorOr wrapped value if validated successfully or ErrorOr error with exception details</returns>
+    public static ErrorOr<TValue> MakeErrorOr(TValue value)
+    {
+        try
+        {
+            var x = Factory();
+            x.Value = value;
+            x.Validate();
+        }
+        catch (Exception e)
+        {
+            return e.AsErrorType();
+        }
+
+        return value.ToErrorOr();
+
+    }
+/// <summary>
+/// Extending the ValueObject with ErrorOr function for chaining in a functional way
+/// </summary>
+/// <param name="eo">The ErrorOr object from the previous operation</param>
+/// <returns>Either the same object if valid or and ErrorOr error with exception details</returns>
+    public static ErrorOr<TValue> TestErrorOr(ErrorOr<TValue> eo)
+    {
+        
+        try
+        {
+            var x = Factory();
+            x.Value = eo.Value;
+            x.Validate();
+        }
+        catch (Exception e)
+        {
+            return e.AsErrorType();
+        }
+
+        return eo;
+    }
+    
+/// <summary>
+/// Extending the ValueObject with ErrorOr function for chaining in a functional way
+/// </summary>
+/// <param name="eo">The ErrorOr object from the previous operation</param>
+/// <returns>Either the same object if valid or and ErrorOr error with exception details</returns>
+    public static ErrorOr<Success> TestErrorOrSuccess(TValue value)
+    {
+        
+        try
+        {
+            var x = Factory();
+            x.Value = value;
+            x.Validate();
+        }
+        catch (Exception e)
+        {
+            return e.AsErrorType();
+        }
+
+        return Result.Success;
     }
 }
