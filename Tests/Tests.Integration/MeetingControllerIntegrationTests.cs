@@ -23,6 +23,7 @@ public class MeetingControllerIntegrationTests : IClassFixture<MyCustomWebFactor
     [InlineData("/SetMeeting")]
     [InlineData("/ErrorOrMeeting")]
     [InlineData("/AttributeMeeting")]
+    [InlineData("/ValueMeeting")]
     public async Task SuccessfullyCreate_AllMeetingTypes_ViaApi(string meetingRoute)
     {
         // Arrange
@@ -45,6 +46,8 @@ public class MeetingControllerIntegrationTests : IClassFixture<MyCustomWebFactor
             yield return new object[] { "/ErrorOrMeeting", i };
         for (int i = 0; i < times; i++)
             yield return new object[] { "/AttributeMeeting", i };
+        for (int i = 0; i < times; i++)
+            yield return new object[] { "/ValueMeeting", i };
     }
 
     [Theory]

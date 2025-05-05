@@ -24,7 +24,7 @@ public class CreateValueMeetingRequestHandler : IRequestHandler<CreateValueMeeti
         Random randomizer = new Random();
 
         // Randomize how the request is handled
-        switch (randomizer.Next(0, 5))
+        switch (randomizer.Next(0, 4))
         {
             case 0:
                 return await Method1(request);
@@ -40,10 +40,6 @@ public class CreateValueMeetingRequestHandler : IRequestHandler<CreateValueMeeti
             
             case 3:
                 return await Method4(request);
-                break;
-            
-            case 4:
-                return await Method5(request);
                 break;
             
             default:
@@ -114,16 +110,4 @@ public class CreateValueMeetingRequestHandler : IRequestHandler<CreateValueMeeti
         return ValueMeeting.TestErrorOr(plainMeeting).Then(_repository.Add);
     }
     
-    // Does no provide validation specific issues - suboptimal
-    private async Task<ErrorOr<Success>> Method5(CreateValueMeetingRequest request)
-    {
-        Console.WriteLine("Using Method5");
-
-        var plainMeeting = request.ToDomain();
-
-        if (ValueMeeting.TryFrom(plainMeeting, out _))
-            return _repository.Add(plainMeeting);
-
-        return DomainError.Meetings.CouldNotCreate;
-    }
 }
