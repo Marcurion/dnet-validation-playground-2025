@@ -13,11 +13,11 @@ MediatR was chosen to implement the request handlers but is not required for the
 Search for the comment "// NOTEABLE:" to quickly navigate to interesting bits and pieces
 
 # Notable files
-- The entire domain layer, it contains 3 different validated takes on the Meeting object (**SetMeeting.cs, ErrorOrMeeting.cs, and AttributeMeeting.cs**)
-- The 3 MediatR handlers that take incoming requests and validate the resulting for each of the 3 Meeting flavors, each handler has multiple methods for validating which are chosen at random (**Src/Application/CreateMeeting/Implementation**)
+- The entire domain layer, it contains 4 different validated takes on the Meeting object (**SetMeeting.cs, ErrorOrMeeting.cs, AttributeMeeting.cs, and ValueMeeting.cs**)
+- The 4 MediatR handlers that take incoming requests and validate the resulting for each of the 4 Meeting flavors, each handler has multiple methods for validating which are chosen at random (**Src/Application/CreateMeeting/Implementation**)
 - **Tests/Tests.Integration/MeetingControllerIntegrationTests.cs** which simulates valid and invalid attempts to create Meetings via the API, it runs multiple times to account for the handlers' randomness
 - **Tests/Tests.UnitTests/ValidationObjectsTests.cs** tests some of the more fundamental aspects of the concepts under investigation, like localization and the functional chains.
-- **Src/Presentation/Controllers/MeetingController.cs** defines the endpoints for the creation of  3 Meeting flavors and error exposing
+- **Src/Presentation/Controllers/MeetingController.cs** defines the endpoints for the creation of  4 Meeting flavors and error exposing
 - **Src/Presentation/test.MeetingController.http** for playing with manual requests against the endpoints
 
 # Concepts investigated
@@ -25,21 +25,21 @@ A list of covered concepts in this project
 
 ## Rules Storage / Management
 - attributes DataAnnotations  ❌ -> **DataAnnotationMeeting.cs**
-- in method ✅ -> **SetMeeting.cs & ErrorOrMeeting.cs**
+- in method ✅ -> **SetMeeting.cs & ErrorOrMeeting.cs & ValueMeeting.cs**
 - attributes DataAnnotations extension ❌ -> **DataAnnotationMeeting.cs**
 - Fluent Validation with class attribute ✅ -> **AttributeMeeting.cs & ValidAttributeMeeting**
 
 ## Return types
-- void -> **SetMeeting.cs** ✅
+- void -> **SetMeeting.cs & ValueObject.cs** ✅
 - property -> none -> **AttributeMeeting.cs** ✅
-- ErrorOr -> **ErrorOrMeeting.cs** ✅
+- ErrorOr -> **ErrorOrMeeting.cs & ValueObject.cs** ✅
 
 
 ## Batch Validation Methods
 - Procedural step-by-step -> **CreateErrorOrMeetingRequestHandler.cs/Method3**
 - Procedural list -> **CreateErrorOrMeetingRequestHandler.cs/Method4**
 - Functional -> The others
-- try-catch Block -> **CreateSetMeetingRequestHandler.cs/Method3 & CreateAttributeMeetingRequestHandler.cs/Method2**
+- try-catch Block -> **CreateSetMeetingRequestHandler.cs/Method3 & CreateAttributeMeetingRequestHandler.cs/Method2 CreateValueMeetingRequestHandler.cs/Method3**
 
 ## Error Propagation
 - just ErrorOr
