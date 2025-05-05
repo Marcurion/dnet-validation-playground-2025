@@ -1,6 +1,8 @@
+using System.Globalization;
 using System.Reflection;
 using Application.Common.Composers;
 using Application.CreateMeeting.Abstraction;
+using Domain.Errors;
 using Domain.Extensions;
 using ErrorOr;
 using FluentValidation;
@@ -25,7 +27,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+LocalizedErrors.StaticLocalizer.UiCulture = CultureInfo.GetCultureInfo("de-DE"); // hardcoding culture here to avoid issues with non English or German setups
+LocalizedErrors.LocalizedErrorLoader.LoadAll();
 
+app.Run();
 // Expose builder and app for testing
 public partial class Program {} // Required for WebApplicationFactory<TEntryPoint>

@@ -56,5 +56,14 @@ namespace Presentation.Controllers
             
             return Ok();
         }
+        
+        [HttpPost("ValueMeeting")]
+        public async Task<IActionResult> CreateValueMeeting([FromBody] CreateValueMeetingRequest request) // We reuse the Mediator request from the application here and save ourself the trouble of introducing aan extra Dto
+        {
+            ErrorOr<Success> requestResult = await _mediator.Send(request);
+            if (requestResult.IsError) return BadRequest(requestResult.Errors);
+            
+            return Ok();
+        }
     }
 }
