@@ -114,7 +114,7 @@ public class CreateErrorOrMeetingRequestHandler : IRequestHandler<CreateErrorOrM
         overallResults.Add(newMeeting.SetMaxAttendees(request.MaxAttendees));
         overallResults.Add(newMeeting.SetAttendeesUserIds(request.AttendeesUserIds));
         if (overallResults.Any(res => res.IsError)) return overallResults.FlattenErrors().WithError(DomainError.Meetings.CouldNotCreate);
-        // NOTEABLE: Method 4 differs from Method 3 that it will collect all Validation issues and not return after the first
+        // NOTABLE: Method 4 differs from Method 3 that it will collect all Validation issues and not return after the first
         
         return _repository.Add(newMeeting);
     }

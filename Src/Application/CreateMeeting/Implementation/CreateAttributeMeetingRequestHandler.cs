@@ -59,6 +59,7 @@ public class CreateAttributeMeetingRequestHandler : IRequestHandler<CreateAttrib
     {
         Console.WriteLine("Using Method2");
 
+        // NOTABLE: Looks very familiar, validation almost "invisible" 
         try
         {
             var newMeeting = new AttributeMeeting();

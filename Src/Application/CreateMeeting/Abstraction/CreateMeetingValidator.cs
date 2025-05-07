@@ -7,7 +7,7 @@ public class CreateMeetingValidator : AbstractValidator<CreateMeetingRequest>
     public CreateMeetingValidator()
     {
         
-        // NOTEABLE: We could of course enforce the business logic here too, but then we
+        // NOTABLE: We could of course enforce the business logic here too, but then we
         // would not be able to showcase how to handle errors in multiple ways, 
         // so we only check if all fields are provided and that the Meeting is not 100 years in the past
         RuleFor(r => r.TakesPlaceWhen)

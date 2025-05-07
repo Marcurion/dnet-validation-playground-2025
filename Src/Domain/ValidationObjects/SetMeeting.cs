@@ -2,6 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain.ValidationObjects;
 
+// NOTABLE: This approach uses old-school exceptions and dedicated modification methods to validate the domain,
+// exceptions can be handled multiple ways, see CreateSetMeetingRequestHandler.cs 
 public class SetMeeting
 {
     public DateTime TakesPlaceWhen { get; private set; }
@@ -23,6 +25,11 @@ public class SetMeeting
         return this;
     }
 
+    // NOTABLE: I decided to offer both the Set... and Alter... methods even though only one is required,
+    // the reason is since the AlterMethod returns the object itself it works well with
+    // a functional chain approach:
+    // ErrorOr<T> overallResult = obj.ToErrorOr().ValidateAny(obj => obj.Alter...).ValidateAny(obj => obj.Alter...).ValidateAny(obj => obj.Alter...).ValidateAny(obj => obj.Alter...);
+    // see: CreateSetMeetingRequestHandler.cs
     public void SetAlreadyHappened(bool value)
     {
         if (value == true && TakesPlaceWhen.ToUniversalTime() > DateTime.UtcNow)

@@ -1,5 +1,6 @@
 namespace Domain.ValidationObjects;
 
+// Just the anemic representation of the domain object
 public class PlainMeeting
 {
     public DateTime TakesPlaceWhen { get; set; }

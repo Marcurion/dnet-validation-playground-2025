@@ -107,7 +107,7 @@ public class CreateValueMeetingRequestHandler : IRequestHandler<CreateValueMeeti
 
         var plainMeeting = request.ToDomain();
         
-        return ValueMeeting.TestErrorOr(plainMeeting).Then(_repository.Add);
+        return ValueMeeting.TestErrorOr(plainMeeting).Then(_repository.Add); // NOTABLE: Very short syntax
     }
     
 }

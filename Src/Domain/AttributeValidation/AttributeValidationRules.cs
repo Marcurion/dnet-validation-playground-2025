@@ -6,6 +6,8 @@ namespace Domain.AttributeValidation;
 
 public static class AttributeValidationRules
 {
+    
+    // NOTABLE: The business rules for AttributeMeeting are enforced here, in this example FluentValidation is used
     public class ValidAttributeMeeting : AbstractValidator<AttributeMeeting>
     {
         public ValidAttributeMeeting()

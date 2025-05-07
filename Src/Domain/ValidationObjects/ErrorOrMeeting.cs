@@ -4,6 +4,7 @@ using ErrorOr;
 
 namespace Domain.ValidationObjects;
 
+// NOTABLE: This approach uses the Result type ErrorOr to return the result of any modifications
 public class ErrorOrMeeting
 {
     public DateTime TakesPlaceWhen { get; private set; }
@@ -14,11 +15,11 @@ public class ErrorOrMeeting
 
     public List<uint> AttendeesUserIds { get; private set; }
 
-    // NOTEABLE: I decided to offer both the Set... and Alter... methods even though only one is required,
+    // NOTABLE: I decided to offer both the Set... and Alter... methods even though only one is required,
     // the reason is since the AlterMethod returns the object itself as ErrorOr type it works well with
     // a functional chain approach:
     // ErrorOr<T> overallResult = obj.ToErrorOr().Then(obj => obj.Alter...).Then(obj => obj.Alter...).Then(obj => obj.Alter...).Then(obj => obj.Alter...);
-    // see: TODO
+    // see: CreateErrorOrMeetingRequestHandler.cs
     public ErrorOr<Success> SetTakesPlaceWhen(DateTime value)
     {
        return this.AlterTakesPlaceWhen(value).Else(errors => errors).Then((res) => Result.Success);

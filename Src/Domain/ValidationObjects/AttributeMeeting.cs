@@ -2,6 +2,7 @@ using Domain.AttributeValidation;
 
 namespace Domain.ValidationObjects;
 
+// NOTABLE: This approach uses smart property setter that check every modification based on the rules defined in the attribute
 [SetRestrictions(typeof(AttributeValidationRules.ValidAttributeMeeting))]
 public class AttributeMeeting
 {

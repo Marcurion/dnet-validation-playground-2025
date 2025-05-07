@@ -10,7 +10,7 @@ ErrorOr was also extended in the regards to exception conversion and flattening 
 MediatR was chosen to implement the request handlers but is not required for the concepts to work.
 
 # Notable code
-Search for the comment "// NOTEABLE:" to quickly navigate to interesting bits and pieces
+Search for the comment "// NOTABLE:" to quickly navigate to interesting bits and pieces
 
 # Notable files
 - The entire domain layer, it contains 4 different validated takes on the Meeting object (**SetMeeting.cs, ErrorOrMeeting.cs, AttributeMeeting.cs, and ValueMeeting.cs**)
